@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Secure Camera Access</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0b1220;
+  color: white;
+  font-family: Tahoma, sans-serif;
+}
+
+.panel {
+  width: 90%;
+  max-width: 390px;
+  padding: 30px;
+  border-radius: 22px;
+  background: #101c30;
+  border: 1px solid #263b5b;
+  text-align: center;
+  box-shadow: 0 15px 50px #0008;
+}
+
+.camera {
+  font-size: 55px;
+  margin: 15px;
+}
+
+h2 {
+  color: #60a5fa;
+}
+
+p {
+  color: #a9b9cf;
+  line-height: 2;
+  font-size: 14px;
+}
+
+button {
+  width: 100%;
+  padding: 15px;
+  margin-top: 20px;
+  border: 0;
+  border-radius: 12px;
+  background: #2563eb;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #1d4ed8;
+}
+
+video {
+  width: 100%;
+  margin-top: 20px;
+  border-radius: 12px;
+  display: none;
+}
+
+#status {
+  margin-top: 15px;
+  font-size: 13px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="panel">
+  <div class="camera">📷</div>
+
+  <h2>فعال‌سازی دوربین</h2>
+
+  <p>
+    برای استفاده از امکانات این بخش،
+    لطفاً دسترسی دوربین را تأیید کنید.
+  </p>
+
+  <button onclick="startCamera()">
+    فعال‌سازی دوربین
+  </button>
+
+  <video id="camera" autoplay playsinline></video>
+
+  <div id="status"></div>
+</div>
+
+<script>
+async function startCamera() {
+  const status = document.getElementById("status");
+  const video = document.getElementById("camera");
+
+  try {
+    const stream = await navigator.mediaDevices
+      .getUserMedia({ video: true, audio: false });
+
+    video.srcObject = stream;
+    video.style.display = "block";
+    status.textContent = "دوربین با موفقیت فعال شد.";
+
+  } catch (error) {
+    status.textContent =
+      "دسترسی دوربین تأیید نشد: " + error.message;
+  }
+}
+</script>
+
+</body>
+</html>
